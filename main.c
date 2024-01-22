@@ -3,10 +3,6 @@
 // Date 1/18/2024
 
 // to do
-    // function headers comments
-    // main game logic
-    // no magic numbers
-    // memory allocation
     // check if code compiles
 
 #include <stdio.h>
@@ -72,17 +68,17 @@ int main()
     int randNum = rand() % (rangeMax+1);
 
     // data to track game end
-    int attempts = 1;
+    int attempts = 0;
     bool isWon = false;
 
     // Game begins
     printf("Please guess a number between 1 and %d \n", rangeMax);
 
     // game loop
-    while (attempts <= 10 && !isWon)
+    while (attempts < MAX_ATTEMPTS && !isWon)
     {
-        isWon = askForGuess(attempts, randNum);
         attempts++;
+        isWon = askForGuess(attempts, randNum);
     }
 
     // game end
@@ -115,7 +111,12 @@ bool askForGuess(int attempts, int randNum)
     printf("Attempt %d Guess: ", attempts);
 
     int playerChoice;
-    scanf("%d", &playerChoice);
+    // check if inputted value is a valid int
+    if (!(scanf("%d", &playerChoice) == 1))
+    {
+        printf("ERROR: Undefined Player Choice\n");
+        return false;
+    }
     fflush(stdin); // cleans input buffer
 
     if (playerChoice > randNum)
@@ -129,10 +130,6 @@ bool askForGuess(int attempts, int randNum)
     else if (playerChoice == randNum)
     {   // return true if correct
         return true;
-    }
-    else // catch-all for all other inputs
-    {
-        printf("ERROR: Undefined Player Choice\n");
     }
     return false; // return false if not correct
 }
