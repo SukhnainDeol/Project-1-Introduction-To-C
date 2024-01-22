@@ -2,13 +2,11 @@
 // Class: SD 247
 // Date 1/18/2024
 
-// to do
-    // check if code compiles
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <stdbool.h>
+#include <time.h>
 
 /**
  * Asks the user for the difficulty level integer
@@ -58,8 +56,9 @@ int main()
     // ask user for chosen difficulty
     int difficulty = askForDifficulty(MIN_DIFFICULTY, MAX_DIFFICULTY);
 
-    // calculate max range for guessing game
-    int rangeMax = pow(DIFFICULTY_MULTIPLIER, difficulty);
+    // calculate max range for guessing game (using a for-loop to apply exponent)
+    int rangeMax = 1;
+    for (int i = 0; i < difficulty; i++) { rangeMax *= DIFFICULTY_MULTIPLIER; }
 
     // give random number generator a seed based on current time
     srand(time(NULL));
